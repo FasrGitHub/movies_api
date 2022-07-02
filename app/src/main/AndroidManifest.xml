@@ -3,6 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.example.moviesapi">
 
+    <uses-permission android:name="android.permission.INTERNET"/>
+
     <application
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
@@ -13,11 +15,8 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MoviesApi"
         tools:targetApi="31">
-        <activity
-            android:name=".MoviesActivity"
-            android:exported="false" />
-        <activity
-            android:name=".presentation.MainActivity"
+        <activity android:name=".presentation.MovieActivity"/>
+        <activity android:name=".presentation.SplashActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

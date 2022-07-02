@@ -12,8 +12,8 @@
 
         <ImageView
             android:id="@+id/iv_banner_movie"
-            android:layout_width="150dp"
-            android:layout_height="250dp"
+            android:layout_width="210dp"
+            android:layout_height="140dp"
             android:layout_margin="8dp"
             android:src="@android:mipmap/sym_def_app_icon"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -44,13 +44,14 @@
             android:layout_marginStart="8dp"
             android:layout_marginTop="4dp"
             android:layout_marginEnd="8dp"
+            android:layout_marginBottom="8dp"
             android:textSize="12sp"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/iv_banner_movie"
             app:layout_constraintTop_toBottomOf="@id/tv_name_movie"
             tools:text="Описание фильма Описание фильма Описание фильма Описание фильма
-            Описание фильма Описание фильма Описание фильма Описание фильма Описание фильма"
-            />
+            Описание фильма Описание фильма Описание фильма Описание фильма Описание фильма" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

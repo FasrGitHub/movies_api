@@ -1,17 +1,19 @@
 package com.example.moviesapi.data.network
 
-import com.example.moviesapi.data.network.models.MoviesListDto
+import com.example.moviesapi.data.network.models.MoviesDtoList
 import retrofit2.http.GET
 import retrofit2.http.Query
 
 interface ApiService {
 
     @GET("reviews/all.json")
-    fun getAllMovies(
-        @Query(QUERY_PARAM_API_KEY) apiKey: String = "M3rOquQpOjemNM6VA1sGb5TpJpf4cFJU"
-    ): MoviesListDto
+    suspend fun getAllMovies(
+        @Query(QUERY_PARAM_API_KEY) apiKey: String,
+        @Query(QUERY_PARAM_OFFSET) offset: Int,
+    ): MoviesDtoList
 
     companion object {
-        private const val QUERY_PARAM_API_KEY = "api_key"
+        private const val QUERY_PARAM_API_KEY = "api-key"
+        private const val QUERY_PARAM_OFFSET = "offset"
     }
 }
