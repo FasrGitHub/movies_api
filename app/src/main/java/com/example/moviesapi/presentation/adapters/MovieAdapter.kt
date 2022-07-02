@@ -1,14 +1,13 @@
 package com.example.moviesapi.presentation.adapters
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.paging.PagingDataAdapter
+import androidx.recyclerview.widget.ListAdapter
 import com.example.moviesapi.databinding.MovieInfoBinding
 import com.example.moviesapi.domain.model.Movie
 import com.squareup.picasso.Picasso
 
-class MovieAdapter : PagingDataAdapter<Movie, MovieViewHolder>(MovieDiffCallback()) {
+class MovieAdapter : ListAdapter<Movie, MovieViewHolder>(MovieDiffCallback()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MovieViewHolder {
         val binding = MovieInfoBinding.inflate(
@@ -23,13 +22,9 @@ class MovieAdapter : PagingDataAdapter<Movie, MovieViewHolder>(MovieDiffCallback
         val movie = getItem(position)
         with(holder.binding) {
             with(movie) {
-                if (movie != null) {
-                    tvNameMovie.text = movie.name
-                    tvDescriptionMovie.text = movie.description
-                    Picasso.get().load(this?.imageUrl).into(ivBannerMovie)
-                } else {
-                    Log.d("MovieAdapter", "onBindViewHolderError!")
-                }
+                tvNameMovie.text = movie.name
+                tvDescriptionMovie.text = movie.description
+                Picasso.get().load(imageUrl).into(ivBannerMovie)
             }
         }
     }

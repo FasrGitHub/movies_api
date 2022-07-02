@@ -25,16 +25,8 @@ class MovieActivity : AppCompatActivity() {
         val adapter = MovieAdapter()
         binding.rvMoviesList.adapter = adapter
         viewModel = ViewModelProvider(this)[MovieViewModel::class.java]
-        observeMovies(adapter)
-    }
-
-    private fun observeMovies(adapter: MovieAdapter) {
-        Log.d("MovieActivity", "observeMoviesS!!!!!!!!!!!")
-        lifecycleScope.launch {
-            viewModel.moviesFlow.collectLatest { pagingData ->
-                adapter.submitData(pagingData)
-            }
+        viewModel.moviesList.observe(this){
+            adapter.submitList(it)
         }
-        Log.d("MovieActivity", "observeMoviesE!!!!!!!!!!")
     }
 }

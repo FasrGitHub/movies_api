@@ -1,12 +1,13 @@
 package com.example.moviesapi.domain.repository
 
+import androidx.lifecycle.LiveData
 import androidx.paging.PagingData
 import com.example.moviesapi.domain.model.Movie
 import kotlinx.coroutines.flow.Flow
 
 interface MoviesRepository {
 
-    suspend fun getPagedMovies(): Flow<PagingData<Movie>>
+    fun getAllMovies(): LiveData<List<Movie>>
 
     suspend fun clearDatabase()
 

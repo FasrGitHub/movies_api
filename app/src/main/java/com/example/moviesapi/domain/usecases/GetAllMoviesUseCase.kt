@@ -2,9 +2,9 @@ package com.example.moviesapi.domain.usecases
 
 import com.example.moviesapi.domain.repository.MoviesRepository
 
-class GetPagedMoviesUseCase(
+class GetAllMoviesUseCase(
     private val moviesRepository: MoviesRepository
 ) {
 
-    suspend operator fun invoke() = moviesRepository.getPagedMovies()
+    operator fun invoke() = moviesRepository.getAllMovies()
 }
