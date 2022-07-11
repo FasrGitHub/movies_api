@@ -1,13 +1,12 @@
 package com.example.moviesapi.data.database
 
-import androidx.lifecycle.LiveData
 import androidx.room.*
 
 @Dao
 interface MovieDao {
 
-    @Query("SELECT * FROM movies_list")
-    fun getAllMovies(): LiveData<List<MovieDbModel>>
+    @Query("SELECT * FROM movies_list LIMIT :limit OFFSET :offset")
+    suspend fun getAllMovies(limit: Int, offset: Int): List<MovieDbModel>
 
     @Query("DELETE FROM movies_list")
     suspend fun deleteAllMovies()

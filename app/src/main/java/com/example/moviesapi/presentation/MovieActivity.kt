@@ -13,20 +13,28 @@ import kotlinx.coroutines.launch
 
 class MovieActivity : AppCompatActivity() {
 
-    private lateinit var viewModel: MovieViewModel
+//    private lateinit var viewModel: MovieViewModel
 
     private val binding by lazy {
         ActivityMoviesBinding.inflate(layoutInflater)
     }
+    private val viewModel by viewModelCreator { MovieViewModel(application) }
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
         val adapter = MovieAdapter()
         binding.rvMoviesList.adapter = adapter
-        viewModel = ViewModelProvider(this)[MovieViewModel::class.java]
-        viewModel.moviesList.observe(this){
-            adapter.submitList(it)
+//        viewModel = ViewModelProvider(this)[MovieViewModel::class.java]
+        observeMovies(adapter)
+    }
+
+    private fun observeMovies(adapter: MovieAdapter) {
+        lifecycleScope.launch {
+            viewModel.moviesFlow.collectLatest { pagingData ->
+                adapter.submitData(pagingData)
+            }
         }
     }
 }

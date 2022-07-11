@@ -25,7 +25,7 @@ class SplashActivity : AppCompatActivity() {
 
         lifecycleScope.launch {
             viewModel.clearDatabase()
-            viewModel.loadMovies(PAGE_AT_INITIALIZATION)
+//            viewModel.loadMovies(PAGE_AT_INITIALIZATION)
             delay(SPLASH_DISPLAY_DELAY)
             onMoviesLoad()
         }
