@@ -29,15 +29,13 @@ class MoviesRepositoryImpl(
     }
 
     override suspend fun loadMovies(loadPosition: Int) {
-        try {
-            val moviesDtoList = apiService.getAllMovies(
-                application.getString(R.string.token),
-                loadPosition
-            )
-            addMovieToDb(moviesDtoList)
-        } catch (e: Exception) {
-            Log.d("MoviesRepositoryImpl", "loadDataERROR")
-        }
+        Log.d("Load movies", "Waiting")
+        val moviesDtoList = apiService.getAllMovies(
+            application.getString(R.string.token),
+            loadPosition
+        )
+        addMovieToDb(moviesDtoList)
+        Log.d("Load movies", "SUCCESS")
     }
 
     override suspend fun clearDatabase() {
@@ -60,7 +58,6 @@ class MoviesRepositoryImpl(
     }
 
     private suspend fun getMovies(pageIndex: Int, pageSize: Int): List<Movie> {
-        delay(2000)
         loadMovies(pageIndex * 20)
 
         val offset = pageIndex * pageSize
