@@ -32,19 +32,23 @@ class MovieActivity : AppCompatActivity() {
             adapter.loadStateFlow.collectLatest {
                 states ->
                 if (states.append is LoadState.Error) {
-                    binding.button.visibility = View.VISIBLE
-                    binding.button.isEnabled = true
-                    binding.button.isClickable = true
-                } else if (binding.button.visibility == View.VISIBLE && states.append is LoadState.NotLoading) {
-                    binding.button.visibility = View.INVISIBLE
+                    binding.clError.visibility = View.VISIBLE
+                    binding.buttonTryAgain.visibility = View.VISIBLE
+                    binding.buttonTryAgain.isEnabled = true
+                    binding.buttonTryAgain.isClickable = true
+                    binding.tvErrorManyRequests.visibility = View.VISIBLE
+                } else if (binding.buttonTryAgain.visibility == View.VISIBLE && states.append is LoadState.NotLoading) {
+                    binding.clError.visibility = View.INVISIBLE
+                    binding.buttonTryAgain.visibility = View.INVISIBLE
+                    binding.tvErrorManyRequests.visibility = View.INVISIBLE
                     binding.rvMoviesList.smoothScrollBy(0, 500)
                 }
             }
         }
 
-        binding.button.setOnClickListener {
-            binding.button.isEnabled = false
-            binding.button.isClickable = false
+        binding.buttonTryAgain.setOnClickListener {
+            binding.buttonTryAgain.isEnabled = false
+            binding.buttonTryAgain.isClickable = false
 
             adapter.retry()
         }

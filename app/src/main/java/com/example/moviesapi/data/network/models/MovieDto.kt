@@ -4,7 +4,7 @@ import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
 
 data class MovieDto(
-    @SerializedName("headline")
+    @SerializedName("display_title")
     @Expose
     val name: String,
     @SerializedName("summary_short")
