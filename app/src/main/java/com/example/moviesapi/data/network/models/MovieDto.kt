@@ -12,5 +12,5 @@ data class MovieDto(
     val description: String,
     @SerializedName("multimedia")
     @Expose
-    val multimedia: MultimediaDto,
+    val multimedia: MultimediaDto?,
 )

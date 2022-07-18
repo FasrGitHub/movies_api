@@ -61,6 +61,7 @@ class MoviesRepositoryImpl(
         loadMovies(pageIndex * 20)
 
         val offset = pageIndex * pageSize
+        Log.d("getMovies-------------->", offset.toString())
         val moviesDbModel = movieDao.getAllMovies(pageSize, offset)
         val moviesList = moviesDbModel.map {
             mapper.mapDbModelToEntity(it)

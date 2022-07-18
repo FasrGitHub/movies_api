@@ -16,6 +16,6 @@ class MovieMapper {
     fun mapDtoToDbModel(dto: MovieDto) = MovieDbModel(
         name = dto.name,
         description = dto.description,
-        imageUrl = dto.multimedia.imageUrl,
+        imageUrl = dto.multimedia?.imageUrl.toString(),
     )
 }
