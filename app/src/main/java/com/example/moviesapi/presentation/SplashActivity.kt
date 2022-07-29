@@ -9,6 +9,7 @@ import com.example.moviesapi.databinding.ActivitySplashBinding
 import com.example.moviesapi.presentation.viewmodels.SplashViewModel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
 class SplashActivity : AppCompatActivity() {
 
@@ -18,10 +19,18 @@ class SplashActivity : AppCompatActivity() {
         ActivitySplashBinding.inflate(layoutInflater)
     }
 
+    @Inject
+    lateinit var viewModelFactory: ViewModelFactory
+
+    private val component by lazy {
+        (application as MoviesApplication).component
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
+        component.inject(this)
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
-        viewModel = ViewModelProvider(this)[SplashViewModel::class.java]
+        viewModel = ViewModelProvider(this, viewModelFactory)[SplashViewModel::class.java]
 
         lifecycleScope.launch {
             viewModel.clearDatabase()

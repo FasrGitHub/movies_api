@@ -1,28 +1,15 @@
 package com.example.moviesapi.presentation
 
-import androidx.activity.ComponentActivity
-import androidx.activity.viewModels
-import androidx.lifecycle.*
-import androidx.savedstate.SavedStateRegistryOwner
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
+import javax.inject.Inject
+import javax.inject.Provider
 
-typealias ViewModelCreator<VM> = (savedStateHandle: SavedStateHandle) -> VM
-
-class ViewModelFactory<VM : ViewModel>(
-    owner: SavedStateRegistryOwner,
-    private val viewModelCreator: ViewModelCreator<VM>
-) : AbstractSavedStateViewModelFactory(owner, null) {
-
-    override fun <T : ViewModel?> create(
-        key: String,
-        modelClass: Class<T>,
-        handle: SavedStateHandle
-    ): T {
-        return viewModelCreator(handle) as T
+class ViewModelFactory @Inject constructor(
+    private val viewModelProviders: @JvmSuppressWildcards Map<Class<out ViewModel>, Provider<ViewModel>>
+) : ViewModelProvider.Factory {
+    override fun <T : ViewModel> create(modelClass: Class<T>): T {
+        return viewModelProviders[modelClass]?.get() as T
     }
-
-}
-
-inline fun <reified VM : ViewModel> ComponentActivity.viewModelCreator(noinline creator: ViewModelCreator<VM>): Lazy<VM> {
-    return viewModels { ViewModelFactory(this, creator) }
 }
 

@@ -2,6 +2,7 @@ package com.example.moviesapi.presentation
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import com.example.moviesapi.databinding.ActivityMoviesBinding
 import com.example.moviesapi.presentation.adapters.DefaultLoadStateAdapter
@@ -10,6 +11,7 @@ import com.example.moviesapi.presentation.adapters.TryAgainAction
 import com.example.moviesapi.presentation.viewmodels.MovieViewModel
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
 
 class MovieActivity : AppCompatActivity() {
@@ -18,14 +20,21 @@ class MovieActivity : AppCompatActivity() {
         ActivityMoviesBinding.inflate(layoutInflater)
     }
 
+    private lateinit var viewModel: MovieViewModel
     private lateinit var mainLoadStateHolder: DefaultLoadStateAdapter.Holder
 
-    private val viewModel by viewModelCreator { MovieViewModel(application) }
+    @Inject
+    lateinit var viewModelFactory: ViewModelFactory
+
+    private val component by lazy {
+        (application as MoviesApplication).component
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        component.inject(this)
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
-
+        viewModel = ViewModelProvider(this, viewModelFactory)[MovieViewModel::class.java]
         setupMoviesList()
     }
 

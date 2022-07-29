@@ -5,7 +5,7 @@ import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import com.example.moviesapi.R
-import com.example.moviesapi.data.database.MovieDatabase
+import com.example.moviesapi.data.database.MovieDao
 import com.example.moviesapi.data.mapper.MovieMapper
 import com.example.moviesapi.data.network.ApiFactory.apiService
 import com.example.moviesapi.data.network.MoviesPageLoader
@@ -14,17 +14,13 @@ import com.example.moviesapi.data.network.models.MoviesDtoList
 import com.example.moviesapi.domain.model.Movie
 import com.example.moviesapi.domain.repository.MoviesRepository
 import kotlinx.coroutines.flow.Flow
+import javax.inject.Inject
 
-class MoviesRepositoryImpl(
-    private val application: Application
+class MoviesRepositoryImpl @Inject constructor(
+    private val application: Application,
+    private val movieDao: MovieDao,
+    private val mapper: MovieMapper,
 ) : MoviesRepository {
-
-    private val movieDao = MovieDatabase.getInstance(application).movieDao()
-    private val mapper = MovieMapper()
-
-    private companion object {
-        private const val PAGE_SIZE = 20
-    }
 
     override suspend fun loadMovies(loadPosition: Int) {
         val moviesDtoList = apiService.getAllMovies(
@@ -68,5 +64,9 @@ class MoviesRepositoryImpl(
         moviesDtoList.results?.map {
             movieDao.addMovie(mapper.mapDtoToDbModel(it))
         }
+    }
+
+    private companion object {
+        private const val PAGE_SIZE = 20
     }
 }

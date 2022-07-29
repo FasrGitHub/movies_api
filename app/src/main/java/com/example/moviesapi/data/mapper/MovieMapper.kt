@@ -3,8 +3,9 @@ package com.example.moviesapi.data.mapper
 import com.example.moviesapi.data.database.MovieDbModel
 import com.example.moviesapi.data.network.models.MovieDto
 import com.example.moviesapi.domain.model.Movie
+import javax.inject.Inject
 
-class MovieMapper {
+class MovieMapper @Inject constructor() {
 
     fun mapDbModelToEntity(dbModel: MovieDbModel) = Movie(
         id  = dbModel.id,
