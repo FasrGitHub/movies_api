@@ -74,4 +74,8 @@ class MovieActivity : AppCompatActivity() {
             }
         }
     }
+
+    override fun onBackPressed() {
+        finish()
+    }
 }

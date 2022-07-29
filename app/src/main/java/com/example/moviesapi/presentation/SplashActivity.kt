@@ -45,6 +45,11 @@ class SplashActivity : AppCompatActivity() {
         )
     }
 
+    override fun onStop() {
+        super.onStop()
+        finish()
+    }
+
     companion object {
         private const val SPLASH_DISPLAY_DELAY: Long = 1000
     }
