@@ -1,9 +1,9 @@
 package com.example.moviesapi.presentation.adapters
 
-import android.util.Log
+import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import android.widget.TextView
+import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.paging.LoadState
 import androidx.paging.LoadStateAdapter
@@ -23,12 +23,13 @@ class DefaultLoadStateAdapter(
     override fun onCreateViewHolder(parent: ViewGroup, loadState: LoadState): Holder {
         val inflater = LayoutInflater.from(parent.context)
         val binding = PartDefaultLoadStateBinding.inflate(inflater, parent, false)
-        return Holder(binding, tryAgainAction)
+        return Holder(binding, tryAgainAction, parent.context)
     }
 
     class Holder(
         private val binding: PartDefaultLoadStateBinding,
-        private val tryAgainAction: TryAgainAction
+        private val tryAgainAction: TryAgainAction,
+        private val context: Context
     ) : RecyclerView.ViewHolder(binding.root) {
 
         init {
@@ -36,33 +37,12 @@ class DefaultLoadStateAdapter(
         }
 
         fun bind(loadState: LoadState) = with(binding) {
-            Log.d("DefaultLoadStateAdapter---------------->", loadState.toString())
-            if (loadState.toString() == TOO_MANY_REQUESTS) {
-                elementDisplay(tvTooManyRequests, loadState)
-            } else if (loadState.toString() == NO_CONNECTION) {
-                elementDisplay(tvNoConnection, loadState)
-            } else {
-                elementDisplay(tvUnexpectedError, loadState)
-            }
-        }
-
-        private fun elementDisplay(
-            requiredText: TextView,
-            loadState: LoadState
-        ) = with(binding) {
-            tvNoConnection.isVisible = false
-            tvTooManyRequests.isVisible = false
-            tvUnexpectedError.isVisible = false
-            progressBar.isVisible = loadState is LoadState.Loading
-            requiredText.isVisible = loadState is LoadState.Error
+            tvLoadError.isVisible = loadState is LoadState.Error
             tryAgainButton.isVisible = loadState is LoadState.Error
-        }
-
-        companion object {
-            private const val TOO_MANY_REQUESTS =
-                "Error(endOfPaginationReached=false, error=retrofit2.HttpException: HTTP 429 Too Many Requests)"
-            private const val NO_CONNECTION =
-                "Error(endOfPaginationReached=false, error=java.net.UnknownHostException: Unable to resolve host \"api.nytimes.com\": No address associated with hostname)"
+            progressBar.isVisible = loadState is LoadState.Loading
+            if (loadState is LoadState.Error) {
+                Toast.makeText(context, loadState.toString(), Toast.LENGTH_LONG).show()
+            }
         }
     }
 }

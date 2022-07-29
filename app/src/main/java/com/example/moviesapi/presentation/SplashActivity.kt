@@ -25,7 +25,6 @@ class SplashActivity : AppCompatActivity() {
 
         lifecycleScope.launch {
             viewModel.clearDatabase()
-//            viewModel.loadMovies(PAGE_AT_INITIALIZATION)
             delay(SPLASH_DISPLAY_DELAY)
             onMoviesLoad()
         }
@@ -38,7 +37,6 @@ class SplashActivity : AppCompatActivity() {
     }
 
     companion object {
-        private const val SPLASH_DISPLAY_DELAY: Long = 2000
-        private const val PAGE_AT_INITIALIZATION = 0
+        private const val SPLASH_DISPLAY_DELAY: Long = 1000
     }
 }

@@ -3,9 +3,7 @@
     <string name="movies_api">MoviesApi</string>
     <string name="error_many_requests">Error! Too many requests completed.</string>
 
-    <string name="too_many_requests">Too many requests. Try again in a minute.</string>
-    <string name="no_connection">Failed to resolve host api.nytimes.com: No address associated with hostname. Maybe there is no internet connection.</string>
-    <string name="unexpected_error">Unexpected error.</string>
+    <string name="load_error">Oops, can\'t load data</string>
     <string name="try_again">Try Again</string>
     <string name="enable_errors">Enable Errors</string>
 </resources>

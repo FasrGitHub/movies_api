@@ -1,7 +1,6 @@
 package com.example.moviesapi.data.repository
 
 import android.app.Application
-import android.util.Log
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingData
@@ -14,7 +13,6 @@ import com.example.moviesapi.data.network.MoviesPagingSource
 import com.example.moviesapi.data.network.models.MoviesDtoList
 import com.example.moviesapi.domain.model.Movie
 import com.example.moviesapi.domain.repository.MoviesRepository
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 
 class MoviesRepositoryImpl(
@@ -29,13 +27,11 @@ class MoviesRepositoryImpl(
     }
 
     override suspend fun loadMovies(loadPosition: Int) {
-        Log.d("Load movies", "Waiting")
         val moviesDtoList = apiService.getAllMovies(
             application.getString(R.string.token),
             loadPosition
         )
         addMovieToDb(moviesDtoList)
-        Log.d("Load movies", "SUCCESS")
     }
 
     override suspend fun clearDatabase() {
@@ -61,7 +57,6 @@ class MoviesRepositoryImpl(
         loadMovies(pageIndex * 20)
 
         val offset = pageIndex * pageSize
-        Log.d("getMovies-------------->", offset.toString())
         val moviesDbModel = movieDao.getAllMovies(pageSize, offset)
         val moviesList = moviesDbModel.map {
             mapper.mapDbModelToEntity(it)
